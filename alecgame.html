@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clicker Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #clickArea {
+            font-size: 24px;
+            cursor: pointer;
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        #powerUpButton {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clicker Game</h1>
+    <p>Click the button to score points!</p>
+    <div id="clickArea">Click Me</div>
+    <p id="score">Score: 0</p>
+    <button id="powerUpButton">Use Power-Up</button>
+
+    <script>
+        let score = 0;
+        let powerUpCount = 0;
+
+        const clickArea = document.getElementById('clickArea');
+        const scoreDisplay = document.getElementById('score');
+        const powerUpButton = document.getElementById('powerUpButton');
+
+        // Function to handle a click on the click area
+        clickArea.addEventListener('click', () => {
+            score += 1 + powerUpCount; // Increase the score with power-up
+            scoreDisplay.textContent = `Score: ${score}`;
+            clickArea.style.backgroundColor = getRandomColor(); // Change the background color
+            clickArea.style.transform = 'scale(1.1)'; // Add animation
+            setTimeout(() => {
+                clickArea.style.transform = 'scale(1)'; // Reset animation
+            }, 100);
+        });
+
+        // Function to use a power-up
+        powerUpButton.addEventListener('click', () => {
+            if (score >= 10) {
+                score -= 10;
+                powerUpCount++;
+                scoreDisplay.textContent = `Score: ${score}`;
+            } else {
+                alert("Not enough score to use the power-up!");
+            }
+        });
+
+        // Function to generate a random color
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
